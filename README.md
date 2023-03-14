@@ -1,0 +1,1 @@
+This is a Chat-gpt service for pythoneniwhere.com, I will use this API to speak with alexa my home and make her do some minimal tasks like turning off the TV and lights
