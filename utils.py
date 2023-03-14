@@ -50,3 +50,8 @@ def get_all_chats():
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
     return col.find()
+
+def delete_chat(id):
+    db = MONGO_CLIENT["chat-gpt-api"]
+    col = db["chats"]
+    col.delete_one({"id":int(id)})

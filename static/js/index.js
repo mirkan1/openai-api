@@ -60,6 +60,30 @@ function sendMessage() {
     });
 }
 
+function deleteChat(id) {
+    axios({
+        method: 'POST',
+        url:"/api/delete_chat",
+        data: {
+            id: id,
+        },
+        responseType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }  
+    }).then((response) => {
+        const status = response.data.status;
+        if (status == "success") {
+            window.location.pathname = "/";
+        } else {
+            alert("Error deleting chat");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+}
 function waitingAnimation(state) {
     if (state="start") {
         console.log("TODO started animation") 

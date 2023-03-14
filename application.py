@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, jsonify
-from utils import get_chat, get_last_chat_message, add_message, start_conversation, get_all_chats, get_chats_len
+from utils import get_chat, get_last_chat_message, add_message, delete_chat, start_conversation, get_all_chats, get_chats_len
 from gpt_api import get_response
 from dotenv import load_dotenv
 load_dotenv()
@@ -17,7 +17,8 @@ def home():
 @app.route("/chat/<id>", methods=['GET'])
 def chat(id):
     chat = get_chat(id)
-    return render_template("chat.html", chat=chat, id=id, title=id)
+    title = chat['messages'][0]['content'][:64]
+    return render_template("chat.html", chat=chat, id=id, title=title)
 # END HTML
 
 # API
@@ -63,6 +64,14 @@ def add_message_to_chat():
 @app.route("/api/chat_list", methods=['GET'])
 def chat_list():
     return jsonify(get_all_chats())
+
+# delete
+@app.route("/api/delete_chat", methods=['POST'])
+def api_delete_chat():
+    id = request.json['id']
+    delete_chat(id)
+    return jsonify({"status":"success"})
+
 # END API
 
 if __name__ == '__main__':
