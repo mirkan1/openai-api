@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="chat" id="{{ id }}">
+        {% for message in chat.messages %}
+            <div class="message">
+                {{ message.role }} >> {{ message.content }} <br>
+            </div>
+        {% endfor %}   
+    </div>
+    <div class="chat">
+        <input type="text" id="role" placeholder="role" value="user">
+        <input type="text" id="message" placeholder="message">
+        <button onclick=sendMessage()>send message</button>
+    </div>
+{% endblock %}

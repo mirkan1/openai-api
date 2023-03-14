@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>PREVIOUS CONVERSATIONS</h2>
+    {% for chat in chats %}
+        <a href="/chat/{{ chat.id }}">{{ chat.messages[0].content }}</a>
+        <hr>
+    {% endfor %}
+    <div class="chat">
+        <h2>START A NEW CONVERSATION</h2>
+        <input type="text" id="role" placeholder="system" value="system" readonly>
+        <input type="text" id="message" placeholder="message">
+        <button onclick=startConversation()>send message</button>
+    </div>
+{% endblock %}
