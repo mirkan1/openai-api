@@ -50,14 +50,15 @@ def add_message_to_chat():
     id = request.json['id']
     message = request.json['message']
     role = request.json['role']
-    add_message(id, message, role)
     chat = get_chat(id)
     messages = []
     for i in chat["messages"]:
         role = i["role"]
         if role != "chatbot_response":
             messages.append(i)
+    messages.append({"role":role, "content":message})
     response = get_response(messages)
+    add_message(id, message, role)
     add_message(id, response, "chatbot_response")
     return jsonify(response)
 
