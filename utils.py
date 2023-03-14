@@ -15,9 +15,13 @@ MONGO_TYPE = {
         },]
 }
 
-def num_tokens_from_string(string: str, encoding_name: str) -> int:
+def num_tokens_from_string(string: str, encoding_name: str, encoding_type: str="cl100k_base") -> int:
     """Returns the number of tokens in a text string."""
-    encoding = tiktoken.encoding_for_model(encoding_name)
+    try:
+        encoding = tiktoken.encoding_for_model(encoding_name)
+    except:
+        encoding = tiktoken.get_encoding(encoding_type)
+
     num_tokens = len(encoding.encode(string))
     return num_tokens
 

@@ -2,7 +2,7 @@
 # https://www.pythonanywhere.com/whitelist/
 
 import os
-import mysql.connector
+from mysql import connector as mysql_connector
 from sys import platform
 import time
 from dotenv import load_dotenv
@@ -14,7 +14,7 @@ PASSWORD = os.environ.get("PASSWORD")
 PORT = os.environ.get("PORT")
 
 def get_db(database):
-  db = mysql.connector.connect(
+  db = mysql_connector.connect(
     host=HOST,
     user=USER,
     password=PASSWORD,
