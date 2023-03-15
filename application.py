@@ -33,7 +33,7 @@ def chat(id):
 def api_start_conversation():
     message = request.json['message']
     role = request.json['role'] or "user"
-    silence = request.json['silence'] or True
+    silence = request.json['silence']
     response = get_response([{
         "role": role,
         "content": message
@@ -57,7 +57,7 @@ def add_message_to_chat():
     id = request.json['id']
     message = request.json['message']
     role = request.json['role']
-    silence = request.json['silence'] or True
+    silence = request.json['silence']
     chat = get_chat(id)
     messages = []
     for i in chat["messages"]:
