@@ -1,11 +1,12 @@
 import os
 import tiktoken
-import pymongo
+from pymongo import MongoClient
+from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
 load_dotenv()
 MONGO_URL = os.environ.get("MONGO_URL")
-MONGO_CLIENT = pymongo.MongoClient(MONGO_URL)
+MONGO_CLIENT = MongoClient(MONGO_URL)
 MONGO_TYPE = {
     "id": int,
     "messages": [
@@ -30,32 +31,33 @@ def get_chats_len():
     col = db["chats"]
     return col.count_documents({})
 
-def get_chat(id):
+def get_chat(_id):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
-    return col.find_one({"id":int(id)})
+    return col.find_one({"_id":ObjectId(_id)})
 
-def get_last_chat_message(id):
+def get_last_chat_message(_id):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
-    return col.find_one({},{"id":int(id)})
+    return col.find_one({},{"_id":ObjectId(_id)})
 
-def add_message(id, message, role):
+def add_message(_id, message, role):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
-    col.update_one({"id":int(id)}, {"$push":{"messages":{"role":role, "content":message}}})
+    col.update_one({"_id":ObjectId(_id)}, {"$push":{"messages":{"role":role, "content":message}}})
 
-def start_conversation(id, message, role):
+def start_conversation(message, role):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
-    col.insert_one({"id":int(id), "messages":[{"role":role, "content":message}]})
+    _id = col.insert_one({"messages":[{"role":role, "content":message}]})
+    return str(_id.inserted_id)
     
 def get_all_chats():
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
     return col.find()
 
-def delete_chat(id):
+def delete_chat(_id):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
-    col.delete_one({"id":int(id)})
+    col.delete_one({"_id":ObjectId(_id)})

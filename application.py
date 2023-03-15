@@ -31,8 +31,6 @@ def chat(id):
 # API
 @app.route('/api/start_conversation', methods=['POST'])
 def api_start_conversation():
-    global MONGO_DB_LENGTH
-    id = MONGO_DB_LENGTH
     message = request.json['message']
     role = request.json['role'] or "user"
     silence = request.json['silence'] or True
@@ -42,10 +40,9 @@ def api_start_conversation():
     }])
     if not silence:
         speak(response)
-    start_conversation(id, message, role)
-    add_message(id, response, "bot")
-    MONGO_DB_LENGTH += 1
-    return jsonify({"response":response, "id":id})
+    _id = start_conversation(message, role)
+    add_message(_id, response, "bot")
+    return jsonify({"response":response, "id":_id})
 
 @app.route("/api/chat/<id>", methods=['GET'])
 def get_chat_by_id(id):
