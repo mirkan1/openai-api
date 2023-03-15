@@ -6,7 +6,8 @@ function startConversation() {
         url:"/api/start_conversation",
         data: {
             message: message,
-            role: role
+            role: role,
+            silence: window.localStorage.getItem("silence"),
         },
         responseType: 'json',
         headers: {
@@ -44,6 +45,7 @@ function sendMessage() {
             id:  chat.id,
             message: message,
             role: role,
+            silence: window.localStorage.getItem("silence"),
         },
         responseType: 'json',
         headers: {
@@ -117,5 +119,15 @@ const messageSendButton = document.getElementById("send-message-button");
 messageSendButton.addEventListener("keypress", function(event) {
     if (event.key === 'Enter') {
         sendMessage();
+    }
+});
+
+const slinceCheakbox = document.getElementById("silence");
+
+speakCheakbox.addEventListener("change", function(event) {
+    if (event.target.checked) {
+        window.localStorage.setItem("silence", "true");
+    } else {
+        window.localStorage.setItem("silence", "false");
     }
 });

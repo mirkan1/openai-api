@@ -1,8 +1,9 @@
 import os
 from flask import Flask, render_template, request, redirect, jsonify
-from utils import get_chat, get_last_chat_message, add_message, delete_chat, start_conversation, get_all_chats, get_chats_len
-from gpt_api import get_response
 from dotenv import load_dotenv
+from utils import get_chat, get_last_chat_message, add_message, \
+    delete_chat, start_conversation, get_all_chats, get_chats_len
+from gpt_api import get_response
 load_dotenv()
 
 app = Flask(__name__)
@@ -34,11 +35,13 @@ def api_start_conversation():
     id = MONGO_DB_LENGTH
     message = request.json['message']
     role = request.json['role'] or "user"
+    silence = request.json['silence'] or True
     response = get_response([{
         "role": role,
         "content": message
     }])
-    speak(response)
+    if not silence:
+        speak(response)
     start_conversation(id, message, role)
     add_message(id, response, "bot")
     MONGO_DB_LENGTH += 1
@@ -57,6 +60,7 @@ def add_message_to_chat():
     id = request.json['id']
     message = request.json['message']
     role = request.json['role']
+    silence = request.json['silence'] or True
     chat = get_chat(id)
     messages = []
     for i in chat["messages"]:
@@ -64,7 +68,8 @@ def add_message_to_chat():
         messages.append(i)
     messages.append({"role":role, "content":message})
     response = get_response(messages)
-    speak(response)
+    if not silence:
+        speak(response)
     add_message(id, message, role)
     add_message(id, response, "bot")
     return jsonify(response)
