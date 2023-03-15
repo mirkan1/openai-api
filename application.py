@@ -33,7 +33,7 @@ def api_start_conversation():
         "content": message
     }])
     start_conversation(id, message, role)
-    add_message(id, response, "chatbot_response")
+    add_message(id, response, "assistant")
     MONGO_DB_LENGTH += 1
     return jsonify({"response":response, "id":id})
 
@@ -54,12 +54,11 @@ def add_message_to_chat():
     messages = []
     for i in chat["messages"]:
         role = i["role"]
-        if role != "chatbot_response":
-            messages.append(i)
+        messages.append(i)
     messages.append({"role":role, "content":message})
     response = get_response(messages)
     add_message(id, message, role)
-    add_message(id, response, "chatbot_response")
+    add_message(id, response, "assistant")
     return jsonify(response)
 
 @app.route("/api/chat_list", methods=['GET'])

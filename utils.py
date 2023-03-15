@@ -10,7 +10,7 @@ MONGO_TYPE = {
     "id": int,
     "messages": [
         {
-            "role": str, 
+            "role": str, # user or system, assistant is for bot
             "content": str
         },]
 }
