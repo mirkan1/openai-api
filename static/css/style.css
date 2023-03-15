@@ -1,39 +1,42 @@
 .message {
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
 }
 
 #role {
-    margin: 0;
-    width: 50px;
+  margin: 0;
+  width: 50px;
 }
 
 #user-chat-box {
-    position: absolute;
-    z-index: 9;
-    background-color: #f1f1f1;
-    text-align: center;
-    border: 1px solid #d3d3d3;
-}
-  
-#user-chat-boxheader {
-    padding: 10px;
-    cursor: move;
-    z-index: 10;
-    background-color: #2196F3;
-    color: #fff;
+  z-index: 9;
+  background-color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #d3d3d3;
 }
 
-#message, #role, #send-message-button {
-    height: 24px;
+#message,
+#role,
+#send-message-button {
+  height: 24px;
 }
 
 .function-holder {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.chat {
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+#message {
+    width: 60vw;
+    height: 12vh;
 }

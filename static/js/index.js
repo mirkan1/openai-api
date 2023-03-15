@@ -122,9 +122,9 @@ messageSendButton.addEventListener("keypress", function(event) {
     }
 });
 
-const slinceCheakbox = document.getElementById("silence");
+const slinceCheakbox = document.querySelector(".silence");
 
-speakCheakbox.addEventListener("change", function(event) {
+slinceCheakbox.addEventListener("change", function(event) {
     if (event.target.checked) {
         window.localStorage.setItem("silence", "true");
     } else {

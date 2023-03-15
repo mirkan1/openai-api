@@ -3,7 +3,7 @@
 {% block main %}
     <h2>PREVIOUS CONVERSATIONS</h2>
     {% for chat in chats %}
-        <a href="/chat/{{ chat.id }}">{{ chat.messages[0].content }}</a> | <button onclick="deleteChat('{{ chat.id }}')">❌</button>
+        <a href="/chat/{{ chat._id }}">{{ chat.messages[0].content }}</a> | <button onclick="deleteChat('{{ chat._id }}')">❌</button>
         <hr>
     {% endfor %}
     <div class="chat">

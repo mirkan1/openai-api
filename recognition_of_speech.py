@@ -21,7 +21,6 @@ def SpeakText(command):
 # Loop infinitely for user to
 # speak
 # print(sr.Microphone.list_microphone_names())
-# breakpoint()
 
 from speech import speak
 mic = sr.Microphone()
