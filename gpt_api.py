@@ -16,10 +16,12 @@ def get_response(messages):
     total_token = 0
     for i in messages:
         message = i["content"]
+        role = i["role"]
         token_count = num_tokens_from_string(message, MODEL)
-        print("this message costs", token_count, "tokens", message[:20], "...")
+        # print("this message costs", token_count, "tokens", message[:20], "...")
         total_token+=token_count
-
+        if role=="bot":
+            i['role'] = "assistant"
     if total_token > 4096:
         return "Message too long, please try again."
 

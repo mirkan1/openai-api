@@ -7,6 +7,12 @@ load_dotenv()
 
 app = Flask(__name__)
 MONGO_DB_LENGTH = get_chats_len()
+ENVIRONMENT = os.environ.get("ENVIRONMENT")
+if ENVIRONMENT == "dev":
+    from speech import speak
+else:
+    def speak(text):
+        pass
 
 # HTML
 @app.route("/", methods=['GET'])
@@ -32,8 +38,9 @@ def api_start_conversation():
         "role": role,
         "content": message
     }])
+    speak(response)
     start_conversation(id, message, role)
-    add_message(id, response, "assistant")
+    add_message(id, response, "bot")
     MONGO_DB_LENGTH += 1
     return jsonify({"response":response, "id":id})
 
@@ -57,8 +64,9 @@ def add_message_to_chat():
         messages.append(i)
     messages.append({"role":role, "content":message})
     response = get_response(messages)
+    speak(response)
     add_message(id, message, role)
-    add_message(id, response, "assistant")
+    add_message(id, response, "bot")
     return jsonify(response)
 
 @app.route("/api/chat_list", methods=['GET'])

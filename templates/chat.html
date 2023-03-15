@@ -3,14 +3,21 @@
 {% block main %}
     <div class="chat" id="{{ id }}">
         {% for message in chat.messages %}
+            <p class="role">
+                {{ message.role }}
+            </p>
             <div class="message">
-                {{ message.role }} >> {{ message.content }} <br>
+                {{ message.content }}
             </div>
         {% endfor %}   
-    </div>
-    <div class="chat">
-        <input type="text" id="role" placeholder="role" value="user">
-        <input type="text" id="message" placeholder="message">
-        <button onclick=sendMessage()>send message</button>
+        </div>
+    <div id="user-chat-box">
+        <div id="user-chat-boxheader">🚛</div>
+        <div class="function-holder">
+
+            <textarea type="text" id="message" placeholder="message"></textarea>
+            <input type="text" id="role" placeholder="role" value="user">
+            <button id="send-message-button" onclick=sendMessage()>send message</button>
+        </div>
     </div>
 {% endblock %}

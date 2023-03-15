@@ -1,7 +1,6 @@
 function startConversation() {
     const message = document.getElementById("message").value;
     const role = document.getElementById("role").value;
-
     axios({
         method: 'POST',
         url:"/api/start_conversation",
@@ -28,11 +27,15 @@ function sendMessage() {
     const message = document.getElementById("message").value;
     const role = document.getElementById("role").value;
     const chat = document.querySelector(".chat");
-    var newDiv = document.createElement("div");
-    newDiv.classList.add("message");
-    newDiv.classList.add(role);
-    newDiv.innerHTML = role + ">>" + message;
-    chat.appendChild(newDiv);
+    const newMessageDiv = document.createElement("div");
+    newMessageDiv.classList.add("message");
+    newMessageDiv.innerHTML = markdownToHtml(message)
+    const newRoleDiv = document.createElement("div");
+    newRoleDiv.classList.add("role");
+    newRoleDiv.classList.add(role);
+    newRoleDiv.innerHTML = role
+    chat.appendChild(newRoleDiv);
+    chat.appendChild(newMessageDiv);
     waitingAnimation("start");
     axios({
         method: 'POST',
@@ -50,11 +53,16 @@ function sendMessage() {
         }  
     }).then((response) => {
         const chatbot_response = response.data;
-        newDiv = document.createElement("div");
-        newDiv.classList.add("message");
-        newDiv.classList.add("chatbot_response");
-        newDiv.innerHTML = chatbot_response;
-        chat.appendChild(newDiv);
+        //
+        const newMessageDiv = document.createElement("div");
+        newMessageDiv.classList.add("message");
+        newMessageDiv.innerHTML = markdownToHtml(chatbot_response)
+        const newRoleDiv = document.createElement("div");
+        newRoleDiv.classList.add("role");
+        newRoleDiv.classList.add("bot");
+        newRoleDiv.innerHTML = "bot"
+        chat.appendChild(newRoleDiv);
+        chat.appendChild(newMessageDiv);
     }).catch((error) => {
         console.error(error);
     });
@@ -91,3 +99,15 @@ function waitingAnimation(state) {
         console.log("TODO stopped animation") 
     }
 }
+var converter;
+function markdownToHtml(text) {
+    return converter.makeHtml(text);
+}
+
+$( document ).ready(function() {
+    converter = new showdown.Converter();
+    const messages = document.querySelectorAll(".message");
+    messages.forEach((message) => {
+        message.innerHTML = markdownToHtml(message.innerHTML.trim());
+    });
+});
