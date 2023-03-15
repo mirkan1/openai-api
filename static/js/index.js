@@ -111,3 +111,11 @@ $( document ).ready(function() {
         message.innerHTML = markdownToHtml(message.innerHTML.trim());
     });
 });
+
+const messageSendButton = document.getElementById("send-message-button");
+
+messageSendButton.addEventListener("keypress", function(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+});
