@@ -4,9 +4,12 @@ from dotenv import load_dotenv
 from utils import get_chat, get_last_chat_message, add_message, \
     delete_chat, start_conversation, get_all_chats, get_chats_len
 from gpt_api import get_response
-load_dotenv()
+from flask_cors import CORS
 
+load_dotenv()
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 MONGO_DB_LENGTH = get_chats_len()
 ENVIRONMENT = os.environ.get("ENVIRONMENT")
 if ENVIRONMENT == "dev":
