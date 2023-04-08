@@ -3,6 +3,7 @@ import tiktoken
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
+import uuid
 
 load_dotenv()
 MONGO_URL = os.environ.get("MONGO_URL")
@@ -61,3 +62,6 @@ def delete_chat(_id):
     db = MONGO_CLIENT["chat-gpt-api"]
     col = db["chats"]
     col.delete_one({"_id":ObjectId(_id)})
+
+def create_session():
+    return str(uuid.uuid4())
