@@ -3,7 +3,6 @@ import dotenv
 import openai
 from utils import num_tokens_from_string
 dotenv.load_dotenv()
-openai.api_key = os.environ.get("OPENAI_API_KEY")
 MODEL = os.environ.get("MODEL", "gpt-3.5-turbo")
 
 # messages = [
@@ -12,7 +11,8 @@ MODEL = os.environ.get("MODEL", "gpt-3.5-turbo")
 #     { "role": "assistant", "content": "..." },
 # ]
 
-def get_response(messages):
+def get_response(messages, api_key):
+    openai.api_key = api_key
     total_token = 0
     for i in messages:
         message = i["content"]
@@ -27,10 +27,6 @@ def get_response(messages):
 
     # 0.002 / 1000 tokens
     total_cost = total_token * (0.002 / 1000)
-    # input_response = input(f"Total message costs {total_cost}$.\nTotal tokens {total_token}.\nDo you want to process tokens and get reponse Y/N ?\n")
-    # if input_response.lower() != "y":
-    #     exit()
-    # create a completion
-    print(f"Total message costs {total_cost}$.\nTotal tokens {total_token}.")
+    # print(f"Total message costs {total_cost}$.\nTotal tokens {total_token}.")
     completion = openai.ChatCompletion.create(model=MODEL, messages=messages)
     return completion.choices[0].message.content

@@ -35,3 +35,34 @@ curl https://api.openai.com/v1/chat/completions \
    ]
 }
 ```
+
+# example user data in python memory and files
+```python
+data = [
+    {
+        "user1": {
+            "id":132123123123,
+            "firstCreated": "2021-04-01 00:00:00",
+            "file": "user1.txt",
+            "isPremium": False,
+            "gptVersion": "gpt2",
+            "email": "mirkanbaba1@gmail.com",
+            "data": [
+                {
+                    "_id": 1,
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": "Hello"
+                        },
+                        {
+                            "role": "bot",
+                            "content": "Hi, How can I help you?"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
+```

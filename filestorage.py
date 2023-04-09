@@ -1,31 +1,6 @@
 import json
 import os
-user = "user1"
-data = [
-    {
-        "user1": {
-            "firstCreated": "2021-04-01 00:00:00",
-            "file": "user1.txt",
-            "isPremium": False,
-            "gptVersion": "gpt2",
-            "data": [
-                {
-                    "_id": 1,
-                    "messages": [
-                        {
-                            "role": "user",
-                            "content": "Hello"
-                        },
-                        {
-                            "role": "bot",
-                            "content": "Hi, How can I help you?"
-                        }
-                    ]
-                }
-            ]
-        }
-    }
-]
+INDENT = int(os.environ.get("INDENT") or 0)
 FILE_PATH = "chats.txt"
 if not os.path.exists(FILE_PATH):
     with open(FILE_PATH, "w") as f:
@@ -63,7 +38,7 @@ def add_message(_id, message, role):
         if str(chat["_id"]) == _id:
             chat["messages"].append({"role": role, "content": message})
             with open(FILE_PATH, "w") as f:
-                f.write(json.dumps(chats))
+                f.write(json.dumps(chats, indent=INDENT))
             return
     raise ValueError("Chat not found")
 
@@ -74,7 +49,7 @@ def start_conversation(message, role):
     new_chat = {"_id": len(chats) + 1, "messages": [{"role": role, "content": message}]}
     chats.append(new_chat)
     with open(FILE_PATH, "w") as f:
-        f.write(json.dumps(chats))
+        f.write(json.dumps(chats, indent=INDENT))
     return str(new_chat["_id"])
 
 def get_all_chats():
@@ -91,6 +66,6 @@ def delete_chat(_id):
         if str(chat["_id"]) == _id:
             del chats[i]
             with open(FILE_PATH, "w") as f:
-                f.write(json.dumps(chats))
+                f.write(json.dumps(chats, indent=INDENT))
             return
     raise ValueError("Chat not found")
