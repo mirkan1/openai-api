@@ -6,10 +6,6 @@ INDENT = int(os.environ.get("INDENT") or 0)
 USER_DIR = os.environ.get("USER_DIR")
 
 def enforce_data_file_path(api_key):
-    # file_path = get_file_path(api_key)
-    # if not os.path.exists(api_key):
-    #     with open(file_path, "w") as f:
-    #         f.write(f"""{{ "_id": "{api_key}" }}""")
     data_file_path = get_data_file_path(api_key)
     if not os.path.exists(data_file_path):
         with open(data_file_path, "w") as f:

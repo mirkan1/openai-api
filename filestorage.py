@@ -2,9 +2,6 @@ import json
 import os
 INDENT = int(os.environ.get("INDENT") or 0)
 FILE_PATH = "chats.txt"
-if not os.path.exists(FILE_PATH):
-    with open(FILE_PATH, "w") as f:
-        f.write("[]")
 
 def get_chats_len():
     with open(FILE_PATH, "r") as f:
@@ -69,3 +66,11 @@ def delete_chat(_id):
                 f.write(json.dumps(chats, indent=INDENT))
             return
     raise ValueError("Chat not found")
+
+def set_environment():
+    if not os.path.exists(FILE_PATH):
+        with open(FILE_PATH, "w") as f:
+            f.write("[]")
+
+# if __name__ == "__main__":
+set_environment()

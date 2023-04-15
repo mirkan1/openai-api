@@ -1,1 +1,3 @@
-This is a Chat-gpt service for pythoneniwhere.com, I will use this API to speak with alexa my home and make her do some minimal tasks like turning off the TV and lights
+## chat gpt back-end api server
+yet another openai api integrated into flask environment
+also using caching into file system to avoid api call limit

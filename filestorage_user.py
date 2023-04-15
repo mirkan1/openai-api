@@ -13,10 +13,6 @@ def set_user_data(user_id, data):
     create_user(user_id, user_data)
     return user_data
 
-def set_environment():
-    if not os.path.exists(USER_DIR):
-        os.mkdir(USER_DIR)
-
 def get_user_by_id(user_id):
     file_path = os.path.join(USER_DIR, f"{user_id}.json")
     if not os.path.exists(file_path):
@@ -45,4 +41,9 @@ def delete_user(user_id):
         raise ValueError("User not found")
     os.remove(file_path)
 
+def set_environment():
+    if not os.path.exists(USER_DIR):
+        os.mkdir(USER_DIR)
+
+# if __name__ == "__main__":
 set_environment()
